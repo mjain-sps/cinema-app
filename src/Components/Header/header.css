@@ -1,0 +1,127 @@
+.header-wrapper {
+  background-color: whitesmoke;
+
+  height: 50px;
+  position: fixed;
+  width: 100%;
+  z-index: 20;
+  font-family: "Oswald", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
+  font-size: 14px;
+}
+.navbar-band {
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(to right, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: headerbar 5s ease-in-out 0s infinite forwards normal;
+}
+.navbar-items__wrapper {
+  display: grid;
+  grid-template-columns: max-content 1fr 1fr auto;
+  grid-template-areas: "image . . navitem";
+  align-items: center !important;
+  height: 45px;
+}
+.navbar-image {
+  grid-area: image;
+  padding: 0 10px;
+}
+.navbar-items__ul {
+  grid-area: navitem;
+  padding: 0px;
+  margin: 0px;
+}
+.navbar--items {
+  display: inline;
+  margin: 0px 10px 0px 0px;
+}
+.navbar--items a {
+  color: #52616b;
+  text-decoration: none;
+  transition: 200ms ease-in;
+}
+.navbar--items a:hover {
+  text-decoration: none;
+}
+.active-header {
+  color: #07689f !important;
+  font-size: 15px;
+  font-weight: bold;
+}
+.navbar--items[name="search"] {
+  border: none;
+  border-radius: 5px;
+}
+.menu-toggle {
+  display: none;
+}
+.bar {
+  height: 3px;
+  width: 25px;
+  background-color: wheat;
+  margin: 5px 10px 5px 0px;
+  display: block;
+  transition: all 0.3s ease-in;
+}
+@keyframes headerbar {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    width: max-content;
+    margin: 0;
+    padding: 0;
+    grid-area: navitem;
+    cursor: pointer;
+  }
+
+  #menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  #menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  #menu-toggle.active .bar:nth-child(3) {
+    /* display: none; */
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .navbar-items__ul {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 55px;
+    background-color: #fff;
+    width: 100%;
+    height: calc(100vh - 50px);
+    transform: translate(-101%);
+    text-align: justify;
+    overflow: hidden;
+    z-index: 10;
+    align-items: center;
+    color: black;
+  }
+}
+.navbar-items__ul.mobile > .navbar--items {
+  margin: 30px 0px;
+}
+
+.navbar-items__ul.mobile > .navbar--items[name="search"] {
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.mobile {
+  transform: translate(0%) !important;
+}

@@ -1,0 +1,19 @@
+.pagination--wrapper {
+  font-family: "Roboto", sans-serif;
+}
+.pagination--wrapper > button {
+  background-color: #f14668;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 15px;
+  margin-right: 10px;
+  border: 1px solid #f14668;
+  min-width: 45px;
+  min-height: 18px;
+  font-size: 10px;
+}
+.pagination--wrapper > span {
+  color: white;
+  margin-right: 10px;
+  font-size: 12px;
+}

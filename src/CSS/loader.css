@@ -1,0 +1,28 @@
+.loader--wrapper {
+  height: 100vh;
+  width: 100vw;
+  background-color: gray;
+  z-index: 30;
+  position: relative;
+  top: 0%;
+  left: 0%;
+  margin-top: -50px;
+}
+.loader-spinner {
+  position: absolute;
+  top: 40%;
+  left: 45%;
+  font-size: 5rem;
+  color: mediumvioletred;
+  font-weight: bold;
+  animation: spinner 1000ms ease 0s infinite forwards normal;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0 deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

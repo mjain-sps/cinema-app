@@ -1,0 +1,21 @@
+.homescreen-wrapper {
+  display: grid;
+  grid-template-columns: 100vw;
+  grid-template-rows: 3;
+  row-gap: 20px;
+  background-color: black;
+  padding: 0px 0px 10px 0px;
+}
+.nowplaying_pagination--wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.homescreen-slideshow {
+}
+
+.homescreen-nowplaying {
+  margin-left: 15px;
+}
+.homescreen-pagination {
+  margin-right: 15px;
+}

@@ -1,0 +1,36 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-auto-rows: 200px;
+
+  row-gap: 20px;
+  justify-items: center;
+}
+
+.grid-element {
+  width: 190px;
+  height: 200px;
+  color: #fff;
+  border: 1px solid red;
+  transition: 400ms ease-in-out;
+  position: relative;
+  overflow: hidden; /* make sure it hides the content that overflows */
+  white-space: nowrap; /* don't break the line */
+  text-overflow: ellipsis; /* give the beautiful '...' effect */
+}
+.grid-element:hover {
+  transform: scale(1.1);
+}
+
+.movie-title {
+  position: absolute;
+  bottom: 15px;
+  margin-left: 3px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+}
+.rating--wrapper {
+  position: absolute;
+  bottom: 2px;
+  margin-left: 3px;
+}
