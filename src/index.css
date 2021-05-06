@@ -20,12 +20,12 @@ body {
 
 .app-wrapper {
   height: 100%;
+  overflow-x: hidden;
   display: grid;
   padding-top: 50px;
   grid-template-rows: auto fit-content(8rem);
 }
+
 .app-homescreen {
-  height: 100%;
-}
-.app-footer {
+  height: 100vh;
 }

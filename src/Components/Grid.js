@@ -6,9 +6,9 @@ function Grid({ moviesArray }) {
   return (
     <>
       {moviesArray ? (
-        moviesArray.map((movie) => {
+        moviesArray.map((movie, idx) => {
           return (
-            <div className="grid-container">
+            <div className="grid-container" key={idx}>
               {movie.results.map((d, index) => {
                 return (
                   <div

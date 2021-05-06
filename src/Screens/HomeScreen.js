@@ -17,8 +17,32 @@ function HomeScreen({ match, location, history }) {
 
   //useState constants
   const [slideShowArray, setSlideShowArray] = useState(null);
+  const [visible, setVisible] = useState(false);
+  //declare refs
+  const ref = useRef();
 
-  //set up intersection observer useEffect
+  //1st useEffect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          console.log(entry);
+          setVisible(true);
+        }
+      },
+      { root: null, rootMargin: "500px", threshold: [0] }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [ref]);
 
   //useEffect
   useEffect(() => {
@@ -54,18 +78,21 @@ function HomeScreen({ match, location, history }) {
     }
   }, [movies]);
 
-  const handleInfiniteScroll = (e) => {
-    e.preventDefault();
-    dispatch(
-      infiniteScrollAction(
-        match.params.type ? match.params.type : "now_playing",
-        parseInt(movies[movies.length - 1].page) + 1
-      )
-    );
-  };
-  console.log(movies);
+  useEffect(() => {
+    if (visible) {
+      setVisible(false);
+      const lastPage = parseInt(movies[movies.length - 1].page) + 1;
+      dispatch(
+        infiniteScrollAction(
+          match.params.type ? match.params.type : "now_playing",
+          lastPage
+        )
+      );
+    }
+  }, [visible]);
+
   return (
-    <>
+    <div>
       {error ? (
         <Messages>{error}</Messages>
       ) : movies && movies.length > 0 ? (
@@ -123,14 +150,14 @@ function HomeScreen({ match, location, history }) {
             <Grid moviesArray={movies && movies.length > 0 ? movies : null} />
           </div>
 
-          <button onClick={handleInfiniteScroll}>load more</button>
+          <div ref={ref}></div>
         </div>
       ) : loading ? (
         <Loader></Loader>
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 }
 

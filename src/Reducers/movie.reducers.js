@@ -22,7 +22,7 @@ export const movieReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        movies: [...state.movies, action.payload],
+        movies: [action.payload],
       };
 
     case FETCH_MOVIE_ERROR:
