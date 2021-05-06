@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SlideShow from "../Components/SlideShow/SlideShow";
 import NowPlaying from "../Components/NowPlaying";
 import Pagination from "../Components/Pagination";
@@ -7,18 +7,19 @@ import Messages from "../Components/Messages";
 import Loader from "../Components/Loader";
 import { IMG_URL } from "../Constants/index";
 import "../CSS/homescreen.css";
-import { fetchMovie } from "../Actions/movie.actions";
+import { fetchMovie, infiniteScrollAction } from "../Actions/movie.actions";
 import { useSelector, useDispatch } from "react-redux";
-function HomeScreen({ match, location, history }) {
-  console.log(history);
 
+function HomeScreen({ match, location, history }) {
   const dispatch = useDispatch();
   const moviesFromState = useSelector((state) => state.movies);
   const { loading, error, movies } = moviesFromState;
 
   //useState constants
   const [slideShowArray, setSlideShowArray] = useState(null);
-  const [pageNumber, setPageNumber] = useState(movies && movies.page);
+
+  //set up intersection observer useEffect
+
   //useEffect
   useEffect(() => {
     dispatch(
@@ -31,9 +32,16 @@ function HomeScreen({ match, location, history }) {
 
   useEffect(() => {
     const createSlideShowArray = (data) => {
-      const workableArray = data.results.slice(5);
+      const sortedOnPopularity = data.results.sort((a, b) => {
+        if (parseInt(a.popularity) < parseInt(b.popularity)) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }); //function ends
+
       const tempArray = [];
-      workableArray.forEach((e, index) => {
+      sortedOnPopularity.slice(5).forEach((e, index) => {
         tempArray.push({
           id: index,
           pic: `${IMG_URL}${e.backdrop_path}`,
@@ -41,18 +49,26 @@ function HomeScreen({ match, location, history }) {
       });
       setSlideShowArray(tempArray);
     };
-    if (movies && movies.results) {
-      createSlideShowArray(movies);
+    if (movies && movies.length > 0) {
+      createSlideShowArray(movies[0]);
     }
   }, [movies]);
 
+  const handleInfiniteScroll = (e) => {
+    e.preventDefault();
+    dispatch(
+      infiniteScrollAction(
+        match.params.type ? match.params.type : "now_playing",
+        parseInt(movies[movies.length - 1].page) + 1
+      )
+    );
+  };
+  console.log(movies);
   return (
     <>
       {error ? (
         <Messages>{error}</Messages>
-      ) : loading ? (
-        <Loader></Loader>
-      ) : (
+      ) : movies && movies.length > 0 ? (
         <div className="homescreen-wrapper">
           <div className="homescreen-slideshow">
             <SlideShow image={slideShowArray && slideShowArray} auto={true} />
@@ -62,24 +78,34 @@ function HomeScreen({ match, location, history }) {
             <div className="homescreen-nowplaying">
               <NowPlaying />
             </div>
-
+            {/* This is the pagination section  */}
             <div className="homescreen-pagination">
               <div className="pagination--wrapper">
                 <span>
                   {" "}
-                  {movies && movies.page}-{movies && movies.total_pages}
+                  {movies && movies[0].page}-{movies && movies[0].total_pages}
                 </span>
                 <button
-                  onClick={() => setPageNumber(pageNumber - 1)}
-                  disabled={pageNumber === 1}
+                  onClick={() => {
+                    const page = parseInt(movies[0].page) - 1;
+                    history.push({
+                      pathname: location.pathname,
+                      search: `?p=${page}`,
+                    });
+                  }}
+                  disabled={movies && movies[0].page === 1}
                 >
                   Prev
                 </button>
                 <button
                   onClick={() => {
-                    setPageNumber(pageNumber + 1);
+                    const page = parseInt(movies[0].page) + 1;
+                    history.push({
+                      pathname: location.pathname,
+                      search: `?p=${page}`,
+                    });
                   }}
-                  disabled={movies && pageNumber === movies.total_pages}
+                  disabled={movies && movies[0].page === movies[0].total_pages}
                 >
                   Next
                 </button>
@@ -94,9 +120,15 @@ function HomeScreen({ match, location, history }) {
             </div>
           </div>
           <div className="homescreen-grid">
-            <Grid image={movies && movies.results} />
+            <Grid moviesArray={movies && movies.length > 0 ? movies : null} />
           </div>
+
+          <button onClick={handleInfiniteScroll}>load more</button>
         </div>
+      ) : loading ? (
+        <Loader></Loader>
+      ) : (
+        ""
       )}
     </>
   );
