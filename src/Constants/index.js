@@ -1,4 +1,4 @@
-export const API_URL = "https://api.themoviedb.org/3/movie";
+export const API_URL = "https://api.themoviedb.org/3";
 export const IMG_URL = "https://image.tmdb.org/t/p/original";
 
 export const FETCH_MOVIE_LOADING = "FETCH_MOVIE_LOADING";
@@ -11,3 +11,11 @@ export const FETCH_MOVIE_SUCCESS_INFINITE_SCROLL =
   "FETCH_MOVIE_SUCCESS_INFINITE_SCROLL";
 export const FETCH_MOVIE_ERROR_INFINITE_SCROLL =
   "FETCH_MOVIE_ERROR_INFINITE_SCROLL";
+
+export const SEARCH_MOVIE_LOADING = "SEARCH_MOVIE_LOADING";
+export const SEARCH_MOVIE_SUCCESS = "SEARCH_MOVIE_SUCCESS";
+export const SEARCH_MOVIE_ERROR = "SEARCH_MOVIE_ERROR";
+
+export const CLEAR_SEARCHED_MOVIE = "CLEAR_SEARCHED_MOVIE";
+
+export const API_KEY = "9695e87530dcfc8431eee7bd9724178e";

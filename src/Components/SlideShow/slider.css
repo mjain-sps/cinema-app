@@ -1,6 +1,6 @@
 .slideshow-wrapper {
   width: 100%;
-  height: 425px;
+  height: 625px;
   position: relative;
   overflow: hidden;
 }
@@ -18,12 +18,13 @@
 }
 .slideshow-image {
   width: 100vw;
-  height: 400px;
+  height: 600px;
 }
 .slideshow-image-tag {
   width: 100vw;
-  height: 400px;
-  object-fit: contain;
+  height: 600px;
+  object-fit: cover;
+  object-position: top;
 }
 .slideshow-indicator {
   text-align: center;

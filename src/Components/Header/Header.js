@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFireAlt, faFilm } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/LOGO.jpg";
+import { useDispatch } from "react-redux";
+import { searchMovie, clearSearched } from "../../Actions/movie.actions";
 import "./header.css";
 function Header({ props }) {
   //Set menu-toggle
   const [menuToggle, setMenuToggle] = useState(false);
+  const [searched, setSearched] = useState("");
+
+  //Define redux-constants
+  const dispatch = useDispatch();
+
+  const handleSearch = (e) => {
+    setSearched(e.target.value);
+    dispatch(searchMovie(e.target.value));
+  };
+
   return (
     <React.Fragment>
       <div className="header-wrapper">
@@ -72,6 +84,8 @@ function Header({ props }) {
               placeholder="Search"
               className="navbar--items"
               name="search"
+              value={searched}
+              onChange={handleSearch}
             />
           </ul>
         </div>

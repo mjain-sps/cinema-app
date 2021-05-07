@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import SlideShow from "../Components/SlideShow/SlideShow";
 import NowPlaying from "../Components/NowPlaying";
-import Pagination from "../Components/Pagination";
 import Grid from "../Components/Grid";
 import Messages from "../Components/Messages";
 import Loader from "../Components/Loader";
@@ -9,10 +8,11 @@ import { IMG_URL } from "../Constants/index";
 import "../CSS/homescreen.css";
 import { fetchMovie, infiniteScrollAction } from "../Actions/movie.actions";
 import { useSelector, useDispatch } from "react-redux";
-
+import "../CSS/paginate.css";
 function HomeScreen({ match, location, history }) {
   const dispatch = useDispatch();
   const moviesFromState = useSelector((state) => state.movies);
+
   const { loading, error, movies } = moviesFromState;
 
   //useState constants
