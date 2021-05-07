@@ -18,7 +18,11 @@ function Header({ props }) {
     setSearched(e.target.value);
     dispatch(searchMovie(e.target.value));
   };
-
+  useEffect(() => {
+    if (searched === "") {
+      dispatch(clearSearched());
+    }
+  }, [searched]);
   return (
     <React.Fragment>
       <div className="header-wrapper">

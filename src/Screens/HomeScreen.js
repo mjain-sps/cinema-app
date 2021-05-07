@@ -9,10 +9,16 @@ import "../CSS/homescreen.css";
 import { fetchMovie, infiniteScrollAction } from "../Actions/movie.actions";
 import { useSelector, useDispatch } from "react-redux";
 import "../CSS/paginate.css";
+import SearchGrid from "../Components/SearchGrid";
 function HomeScreen({ match, location, history }) {
   const dispatch = useDispatch();
   const moviesFromState = useSelector((state) => state.movies);
-
+  const searchedMovieFromState = useSelector((state) => state.search);
+  const {
+    loading: searchLoading,
+    movies: searchedMovies,
+    error: searchError,
+  } = searchedMovieFromState;
   const { loading, error, movies } = moviesFromState;
 
   //useState constants
@@ -93,9 +99,15 @@ function HomeScreen({ match, location, history }) {
 
   return (
     <div>
-      {error ? (
-        <Messages>{error}</Messages>
-      ) : movies && movies.length > 0 ? (
+      {error || searchError ? (
+        <Messages>{error || searchError}</Messages>
+      ) : searchedMovies && searchedMovies.length > 0 ? (
+        <SearchGrid
+          moviesArray={
+            searchedMovies && searchedMovies.length > 0 ? searchedMovies : null
+          }
+        />
+      ) : movies && movies.length ? (
         <div className="homescreen-wrapper">
           <div className="homescreen-slideshow">
             <SlideShow image={slideShowArray && slideShowArray} auto={true} />
@@ -152,7 +164,7 @@ function HomeScreen({ match, location, history }) {
 
           <div ref={ref}></div>
         </div>
-      ) : loading ? (
+      ) : loading || searchLoading ? (
         <Loader></Loader>
       ) : (
         ""

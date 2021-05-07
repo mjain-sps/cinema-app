@@ -21,6 +21,9 @@
 .grid-element:hover {
   transform: scale(1.1);
 }
+.grid-element:hover .grid-CTA {
+  opacity: 1;
+}
 
 .movie-title {
   position: absolute;
@@ -33,4 +36,22 @@
   position: absolute;
   bottom: 2px;
   margin-left: 3px;
+}
+.grid-CTA {
+  position: absolute;
+  top: 40%;
+  color: white;
+  background-color: red;
+  height: 30px;
+  width: 50%;
+  border-radius: 3px;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  line-height: 30px;
+  font-weight: bold;
+  left: 25%;
+  transition: 500ms ease-in-out;
+  opacity: 0;
+  cursor: pointer;
 }
